@@ -131,9 +131,11 @@ async function main(){
     }
     document.getElementById("table").appendChild(table);
 
-    /make graph use 
+    //make graph use chart.js
     let graph_deta = [];
     let graph_xy = [];
+
+    //sort graph_data in ascending
     for(let i=0;i<records.length;i++){
         graph_deta[i]=records[i].op_percentage;
     }
@@ -151,21 +153,19 @@ async function main(){
     var scatter = new Chart(canvas,{
         type:"scatter",
         data:{
-            detasets:[
-            {
+            detasets:[{
                 label:'op',
                 deta:graph_xy,
-                backgroundColor:'RBGA(255,0,0,1)'
-            }] 
+                backgroundColor:'rgb(0,0,0)'
+            }],
         },
         options:{
             scales:{
                 x:{min:1,max:graph_xy.length},
-                y:{min:80,max:100},
+                y:{min:graph_xy[0].y-5,max:100},
             },
         },
     })
-  
 }
 
 let user_name = document.getElementById("user_id");
