@@ -111,6 +111,7 @@ async function main(){
 
     //make table to "table"
     //if change maketable fromID,change this code
+    records.sort((a,b) => a.op_percentage-b.op_percentage);
     let table = document.createElement("table");
     let tr = document.createElement("tr");
     for(key in records[0]){
