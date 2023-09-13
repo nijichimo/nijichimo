@@ -110,7 +110,7 @@ async function main(){
     console.log(json_result)
 
     //make table to "table"
-    //if change index
+    //if change maketable fromID,change this code
     let table = document.createElement("table");
     let tr = document.createElement("tr");
     for(key in records[0]){
@@ -130,7 +130,8 @@ async function main(){
         table.appendChild(tr);
     }
     document.getElementById("table").appendChild(table);
-    
+
+    /make graph use 
     let graph_deta = [];
     let graph_xy = [];
     for(let i=0;i<records.length;i++){
