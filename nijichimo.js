@@ -32,9 +32,9 @@ function op_cal(con,score,rank,fc,aj){
     }else if(rank =='S'){
         OP+=(score - 975000) * 0.0002;
     }else if(rank =='SS'){
-        OP+=(score - 1000000) * 0.0005 + 0.5;
+        OP+=(score - 1000000) * 0.0005 + 5;
     }else if(rank =='SS+'){
-        OP+=(score-1005000) * 0.001 + 0.75;
+        OP+=(score-1005000) * 0.001 + 7.5;
     }else if(rank =='SSS'){
         OP+=(score-1007500) * 0.0015 +10;
     }else if(rank =='MAX'){
