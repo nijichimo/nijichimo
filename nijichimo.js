@@ -19,9 +19,9 @@ function is_Rank(x){
 }
 
 //cal overpower from const,score,rank,clear flag,fullCcombo_flag,AllJustice_flag
-function op_cal(con,score,rank,clear,fc,aj){
+function op_cal(con,score,rank,fc,aj){
     let OP=0;
-    if(clear){
+    if(score!=0){
         OP += con*5;
     }else{
         return 0;
@@ -81,7 +81,7 @@ async function main(){
         delete records[i].updated_at;
         
         records[i].rank = is_Rank(records[i].score);
-        records[i].op = op_cal(records[i].const,records[i].score,records[i].rank,records[i].is_clear,records[i].is_fullcombo,records[i].is_alljustice);
+        records[i].op = op_cal(records[i].const,records[i].score,records[i].rank,records[i].is_fullcombo,records[i].is_alljustice);
         records[i].op_max=op_max(records[i].const);
         records[i].op_percentage=Math.round(records[i].op/records[i].op_max*10000)/100;
     }
