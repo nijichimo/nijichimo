@@ -152,16 +152,16 @@ async function main(){
     let canvas = document.getElementById("canvas");
     var scatter = new Chart(canvas,{
         type:"scatter",
-        data:{
-            detasets:[{
-                label:'op',
-                deta:graph_xy,
-                backgroundColor:'rgb(0,0,0)'
+        data: {
+            datasets: [{
+                label: 'OP',
+                data: graph_xy,
+                backgroundColor: 'rgb(0,0,0)'
             }],
         },
         options:{
             scales:{
-                x:{min:1,max:graph_xy.length},
+                x:{min:0,max:graph_xy.length},
                 y:{min:graph_xy[0].y-5,max:100},
             },
         },
