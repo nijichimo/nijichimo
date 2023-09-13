@@ -1,3 +1,4 @@
+//cal rank from score
 function is_Rank(x){
     if(x<975000){
         return 'None';
@@ -17,6 +18,7 @@ function is_Rank(x){
     return 'MAX';
 }
 
+//cal overpower from const,score,rank,clear flag,fullCcombo_flag,AllJustice_flag
 function op_cal(con,score,rank,clear,fc,aj){
     let OP=0;
     if(clear){
@@ -45,18 +47,23 @@ function op_cal(con,score,rank,clear,fc,aj){
     return Math.floor(OP*10000)/10000;
 }
 
+//cal Theoretical overpower
 function op_max(con){
     return (con+3)*5;
 }
 
-async function getUsername(){
+async function main(){
+    //make endpoint
     let user = 'user_name=';
     const region = 'region=jp2';
+    //this is creater token
+    //if your account is private,when please change your token 
     const API_Token = 'token=ba592100f64e49868a03afd91ae1fce496f62a5de756086a117ef581e9a8f6158242873c83c739572e10e9e14c2c12b6c7a0417a99d0bc7fbdb78b3441dfe930';
     //user_id = document.getname.user_id.value;
     user+=user_name.value
     const API_Endpoint = 'https://api.chunirec.net/2.0/records/showall.json?' + user + '&' + region + '&' + API_Token;
-    
+
+    //call API and Assign to "recoreds" as String
     const response = await fetch(API_Endpoint).then(response => response.json());
     let records = [];
     records = response.records;
@@ -79,7 +86,8 @@ async function getUsername(){
         records[i].op_percentage=Math.round(records[i].op/records[i].op_max*10000)/100;
     }
     records = records.filter(Boolean);
-    
+
+    //Assign to "json_result" as JSON
     const json_result = JSON.stringify(records);
     /*
     const header = Object.keys(records[0]);
@@ -100,6 +108,9 @@ async function getUsername(){
     */
 
     console.log(json_result)
+
+    //make table to "table"
+    //if change index
     let table = document.createElement("table");
     let tr = document.createElement("tr");
     for(key in records[0]){
@@ -159,6 +170,6 @@ async function getUsername(){
 let user_name = document.getElementById("user_id");
 
 let checkButton = document.getElementById("get_user_id")
-checkButton.addEventListener('click', getUsername);
+checkButton.addEventListener('click', main);
 
 let csv_table =document.getElementById("csv_table");
