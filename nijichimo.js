@@ -53,17 +53,22 @@ function op_max(con){
 }
 
 async function main(){
-    //make endpoint
+        //save OP target
+    let target = OP_target.value;
+    target = parseFloat(target);
+    target /= 100
+
+        //make endpoint
     let user = 'user_name=';
     const region = 'region=jp2';
-    //this is creater token
-    //if your account is private,when please change your token 
+        //this is creater token
+        //if your account is private,when please change your token 
     const API_Token = 'token=ba592100f64e49868a03afd91ae1fce496f62a5de756086a117ef581e9a8f6158242873c83c739572e10e9e14c2c12b6c7a0417a99d0bc7fbdb78b3441dfe930';
-    //user_id = document.getname.user_id.value;
-    user+=user_name.value
+        //user_id = document.getname.user_id.value;
+    user+=user_name.value;
     const API_Endpoint = 'https://api.chunirec.net/2.0/records/showall.json?' + user + '&' + region + '&' + API_Token;
 
-    //call API and Assign to "recoreds" as String
+        //call API and Assign to "recoreds" as String
     const response = await fetch(API_Endpoint).then(response => response.json());
     let records = [];
     records = response.records;
@@ -73,21 +78,23 @@ async function main(){
             continue;
         };
         
+        records[i].rank = is_Rank(records[i].score);
+        records[i].op = op_cal(records[i].const,records[i].score,records[i].rank,records[i].is_fullcombo,records[i].is_alljustice);
+        records[i].op_max=op_max(records[i].const);
+        records[i].op_percentage=Math.round(records[i].op/records[i].op_max*10000)/100;
+        
         delete records[i].id;
         delete records[i].rating;
         delete records[i].is_const_unknown;
         delete records[i].is_played;
         delete records[i].is_fullchain;
         delete records[i].updated_at;
-        
-        records[i].rank = is_Rank(records[i].score);
-        records[i].op = op_cal(records[i].const,records[i].score,records[i].rank,records[i].is_fullcombo,records[i].is_alljustice);
-        records[i].op_max=op_max(records[i].const);
-        records[i].op_percentage=Math.round(records[i].op/records[i].op_max*10000)/100;
+        delete records[i].is_clear;
+        delete records[i].level;
     }
     records = records.filter(Boolean);
 
-    //Assign to "json_result" as JSON
+        //Assign to "json_result" as JSON
     const json_result = JSON.stringify(records);
     /*
     const header = Object.keys(records[0]);
@@ -108,9 +115,27 @@ async function main(){
     */
 
     console.log(json_result)
-
-    //make table to "table"
-    //if change maketable fromID,change this code
+    
+        //show op infomation
+    var theoreticalOP=0;
+    var totalOP=0;
+    for(let i=0;i<records.length;i++){
+        theoreticalOP+=records[i].op_max;
+        totalOP+=records[i].op*10000;
+    }
+    totalOP/=10000;
+    diff=Math.round((theoreticalOP*target-totalOP)*10000)/10000;
+    scoreEqu=Math.round(diff*10000/15)
+    let yourOP = document.getElementById("your_OP")
+    yourOP.insertAdjacentHTML("beforebegin",`あなたの現在のOPは${totalOP}です`)
+    let diffOP = document.getElementById("your_op-max_op")
+    diffOP.insertAdjacentHTML("beforebegin",`目標OP${target*100}%からの不足は${diff}です`)
+    let equivalent = document.getElementById("(your_op-max_op)/score")
+    equivalent.insertAdjacentHTML("beforebegin",`この値は、スコア約${scoreEqu}点に相当します(SSS以上)`)
+    let annotaiton = document.getElementById("OP_annotaiton")
+    annotaiton.insertAdjacentHTML("beforebegin",`理論値:約167点<br>AJ:約333点<br>に相当します`)
+        //make table to "table"
+        //if change maketable fromID,change this code
     records.sort((a,b) => a.op_percentage-b.op_percentage);
     let table = document.createElement("table");
     let tr = document.createElement("tr");
@@ -121,7 +146,7 @@ async function main(){
     }
     table.appendChild(tr);
     
-    for(var i=0;i<records.length;i++){
+    for(let i=0;i<records.length;i++){
         let tr = document.createElement("tr");
         for(key in records[0]){
             td=document.createElement("td");
@@ -132,11 +157,11 @@ async function main(){
     }
     document.getElementById("table").appendChild(table);
 
-    //make graph use chart.js
+        //make graph use chart.js
     let graph_deta = [];
     let graph_xy = [];
 
-    //sort graph_data in ascending
+        //sort graph_data in ascending
     for(let i=0;i<records.length;i++){
         graph_deta[i]=records[i].op_percentage;
     }
@@ -171,7 +196,9 @@ async function main(){
 
 let user_name = document.getElementById("user_id");
 
-let checkButton = document.getElementById("get_user_id")
-checkButton.addEventListener('click', main);
+//let checkButton = document.getElementById("get_user_id")
+//checkButton.addEventListener('click', main);
+let saveTerget = document.getElementById("get_OP_target");
+saveTerget.addEventListener('click', main);
 
 let csv_table =document.getElementById("csv_table");

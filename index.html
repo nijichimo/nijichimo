@@ -1,12 +1,21 @@
-
 <!DOCTYPE html>
 <html>
     <head>
     </head>
     <body>
     <form name="getname">
+    <p>ユーザーIDを入力してください</p>
     <input type="text" id="user_id" name="user_id" size="20" />
-    <input type="button" id="get_user_id" name="get_user_id"value="登録する">
+    <br>
+    <p>目標OPの値を%で入力してください</p>
+    <input type="text" id="OP_target" name="OP_target" size="10" />
+    <input type="button" id="get_OP_target" name="get_OP_target"value="グラフを表示">
+    </form>
+    <form name="OP">
+    <div id="your_OP" name="user_op"></div>
+    <div id="your_op-max_op" name="your_op-max_op"></div>
+    <div id="(your_op-max_op)/score" name="(your_op-max_op)/score"></div>
+    <div id="OP_annotaiton" name="OP_annotaiton"></div>
     </form>
     <form name="makegragh">
     <canvas id="canvas"></canvas>
