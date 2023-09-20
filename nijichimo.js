@@ -30,21 +30,21 @@ function op_cal(con,score,rank,fc,aj){
     if (rank == 'None'){
         OP+=0;
     }else if(rank =='S'){
-        OP+=(score - 975000) * 0.0002;
+        OP+=(score - 975000) * 2;
     }else if(rank =='SS'){
-        OP+=(score - 1000000) * 0.0005 + 5;
+        OP+=(score - 1000000) * 5 + 50000;
     }else if(rank =='SS+'){
-        OP+=(score-1005000) * 0.001 + 7.5;
+        OP+=(score-1005000) * 1 + 75000;
     }else if(rank =='SSS'){
-        OP+=(score-1007500) * 0.0015 +10;
+        OP+=(score-1007500) * 15 +100000;
     }else if(rank =='MAX'){
-        OP+=14;
+        OP+=140000;
     }
     
-    if(fc)OP+=0.5;
-    if(aj)OP+=0.5;
+    if(fc)OP+=5000;
+    if(aj)OP+=5000;
     
-    return Math.floor(OP*10000)/10000;
+    return OP/10000;
 }
 
 //cal Theoretical overpower
