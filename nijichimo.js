@@ -22,7 +22,7 @@ function is_Rank(x){
 function op_cal(con,score,rank,fc,aj){
     let OP=0;
     if(score!=0){
-        OP += con*5;
+        OP += con*50000;
     }else{
         return 0;
     }
