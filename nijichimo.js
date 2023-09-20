@@ -34,7 +34,7 @@ function op_cal(con,score,rank,fc,aj){
     }else if(rank =='SS'){
         OP+=(score - 1000000) * 5 + 50000;
     }else if(rank =='SS+'){
-        OP+=(score-1005000) * 1 + 75000;
+        OP+=(score-1005000) * 10 + 75000;
     }else if(rank =='SSS'){
         OP+=(score-1007500) * 15 +100000;
     }else if(rank =='MAX'){
