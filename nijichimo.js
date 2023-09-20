@@ -19,7 +19,7 @@ function is_Rank(x){
 }
 
 //cal overpower from const,score,rank,clear flag,fullCcombo_flag,AllJustice_flag
-function op_cal(con,score,rank,fc,aj){
+/*function op_cal(con,score,rank,fc,aj){
     let OP=0;
     if(score!=0){
         OP += con*50000;
@@ -44,7 +44,36 @@ function op_cal(con,score,rank,fc,aj){
     if(fc)OP+=5000;
     if(aj)OP+=5000;
     
-    return OP/10000;
+    return Math.floor(OP/10)/1000;
+    //return OP/10000;
+}*/
+function op_cal(con,score,rank,fc,aj){
+    let OP=0;
+    if(score!=0){
+        OP += con*50000;
+    }else{
+        return 0;
+    }
+    
+    if (rank == 'None'){
+        OP+=0;
+    }else if(rank =='S'){
+        OP+=Math.floor((score-975000)/250)*500;
+    }else if(rank =='SS'){
+        OP+=Math.floor((score-1000000)/100)*500+50000;
+    }else if(rank =='SS+'){
+        OP+=Math.floor((score-1005000)/50)*500+75000;
+    }else if(rank =='SSS'){
+        OP+=(score-1007500) * 15 +100000;
+    }else if(rank =='MAX'){
+        OP+=140000;
+    }
+    
+    if(fc)OP+=5000;
+    if(aj)OP+=5000;
+    
+    return Math.floor(OP/10)/1000;
+    //return OP/10000;
 }
 
 //cal Theoretical overpower
